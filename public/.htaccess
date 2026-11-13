@@ -1,0 +1,39 @@
+# =============================================================================
+# RB STAR Voice Chat Room - InfinityFree Apache (.htaccess) Configuration
+# =============================================================================
+
+Options -Indexes
+
+# Block direct HTTP access to sensitive config, SQL, and environment files
+<FilesMatch "(^config\.php$|\.sql$|\.env$|\.log$|\.md$)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Security Headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Enable URL Rewriting for React SPA while keeping /api/* PHP endpoints working
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Pass through API PHP routes and real files/assets directly
+  RewriteRule ^api/ - [L]
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Route everything else to React index.html
+  RewriteRule ^ index.html [L]
+</IfModule>

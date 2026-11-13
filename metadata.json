@@ -1,0 +1,7 @@
+{
+  "name": "VoiceRoom Hub - Official Ecosystem & Admin Portal",
+  "description": "Comprehensive Voice Chat Room App portal with Official Coin Resellers, Super Admin, Customer Support, BD, Agency Management, and Staff Verification.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
